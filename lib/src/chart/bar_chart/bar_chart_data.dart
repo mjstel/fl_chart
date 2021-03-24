@@ -54,6 +54,8 @@ class BarChartData extends AxisChartData with EquatableMixin {
     FlAxisTitleData? axisTitleData,
     double? maxY,
     double? minY,
+    double? maxX,
+    double? minX,
     FlGridData? gridData,
     FlBorderData? borderData,
     RangeAnnotations? rangeAnnotations,
@@ -73,8 +75,8 @@ class BarChartData extends AxisChartData with EquatableMixin {
             rangeAnnotations: rangeAnnotations ?? RangeAnnotations(),
             backgroundColor: backgroundColor,
             touchData: barTouchData ?? BarTouchData(),
-            minX: 0,
-            maxX: 1,
+            minX: minX ?? 0,
+            maxX: maxX ?? 1,
             maxY: maxY ?? BarChartHelper.calculateMaxAxisValues(barGroups ?? []).maxY,
             minY: minY ?? BarChartHelper.calculateMaxAxisValues(barGroups ?? []).minY);
 
@@ -92,6 +94,8 @@ class BarChartData extends AxisChartData with EquatableMixin {
     FlBorderData? borderData,
     double? maxY,
     double? minY,
+    double? maxX,
+    double? minX,
     Color? backgroundColor,
   }) {
     return BarChartData(
@@ -106,6 +110,8 @@ class BarChartData extends AxisChartData with EquatableMixin {
       borderData: borderData ?? this.borderData,
       maxY: maxY ?? this.maxY,
       minY: minY ?? this.minY,
+      minX: minX ?? this.minX,
+      maxX: maxX ?? this.maxX,
       backgroundColor: backgroundColor ?? this.backgroundColor,
     );
   }
@@ -126,6 +132,8 @@ class BarChartData extends AxisChartData with EquatableMixin {
         borderData: FlBorderData.lerp(a.borderData, b.borderData, t),
         maxY: lerpDouble(a.maxY, b.maxY, t),
         minY: lerpDouble(a.minY, b.minY, t),
+        maxX: lerpDouble(a.maxX, b.maxX, t),
+        minX: lerpDouble(a.minX, b.minX, t),
         backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t),
       );
     } else {
@@ -144,6 +152,8 @@ class BarChartData extends AxisChartData with EquatableMixin {
         axisTitleData,
         maxY,
         minY,
+        maxX,
+        minX,
         gridData,
         borderData,
         rangeAnnotations,
@@ -470,6 +480,8 @@ class BackgroundBarChartRodData with EquatableMixin {
   /// [y] is the height of this rod
   final double y;
 
+  final double yOffset;
+
   /// if you pass just one color, the solid color will be used,
   /// or if you pass more than one color, we use gradient mode to draw.
   /// then the [gradientFrom], [gradientTo] and [colorStops] is important,
@@ -494,12 +506,14 @@ class BackgroundBarChartRodData with EquatableMixin {
   /// you prevent to show it, using [show] property.
   BackgroundBarChartRodData({
     double? y,
+    double? yOffset,
     bool? show,
     List<Color>? colors,
     Offset? gradientFrom,
     Offset? gradientTo,
     List<double>? colorStops,
   })  : y = y ?? 8,
+        yOffset = yOffset ?? 0,
         show = show ?? false,
         colors = colors ?? [Colors.blueGrey],
         gradientFrom = gradientFrom ?? const Offset(0, 0),
@@ -511,6 +525,7 @@ class BackgroundBarChartRodData with EquatableMixin {
       BackgroundBarChartRodData a, BackgroundBarChartRodData b, double t) {
     return BackgroundBarChartRodData(
       y: lerpDouble(a.y, b.y, t),
+      yOffset: lerpDouble(a.yOffset, b.yOffset, t),
       gradientFrom: Offset.lerp(a.gradientFrom, b.gradientFrom, t),
       gradientTo: Offset.lerp(a.gradientTo, b.gradientTo, t),
       colors: lerpColorList(a.colors, b.colors, t),
@@ -524,6 +539,7 @@ class BackgroundBarChartRodData with EquatableMixin {
   List<Object?> get props => [
         show,
         y,
+        yOffset,
         colors,
         gradientTo,
         gradientFrom,
