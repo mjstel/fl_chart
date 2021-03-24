@@ -262,7 +262,7 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
         if (barRod.y != 0) {
           if (barRod.y > 0) {
             // positive
-            final bottom = getPixelY(max(data.minY, 0), drawSize, holder);
+            final bottom = getPixelY(max(data.minY, barRod.yOffset), drawSize, holder);
             final top = min(getPixelY(barRod.y, drawSize, holder), bottom - cornerHeight);
 
             barRRect = RRect.fromLTRBAndCorners(left, top, right, bottom,
@@ -272,7 +272,7 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
                 bottomRight: borderRadius.bottomRight);
           } else {
             // negative
-            final top = getPixelY(min(data.maxY, 0), drawSize, holder);
+            final top = getPixelY(min(data.maxY, barRod.yOffset), drawSize, holder);
             final bottom = max(getPixelY(barRod.y, drawSize, holder), top + cornerHeight);
 
             barRRect = RRect.fromLTRBAndCorners(left, top, right, bottom,

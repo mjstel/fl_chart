@@ -255,6 +255,9 @@ class BarChartRodData with EquatableMixin {
   /// [BarChart] renders rods vertically from zero to [y].
   final double y;
 
+  ///
+  final double yOffset;
+
   /// if you pass just one color, the solid color will be used,
   /// or if you pass more than one color, we use gradient mode to draw.
   /// then the [gradientFrom], [gradientTo] and [colorStops] is important,
@@ -314,6 +317,7 @@ class BarChartRodData with EquatableMixin {
   /// ```
   BarChartRodData({
     required double y,
+    double? yOffset,
     List<Color>? colors,
     Offset? gradientFrom,
     Offset? gradientTo,
@@ -323,6 +327,7 @@ class BarChartRodData with EquatableMixin {
     BackgroundBarChartRodData? backDrawRodData,
     List<BarChartRodStackItem>? rodStackItems,
   })  : y = y,
+        yOffset = yOffset ?? 0,
         colors = colors ?? [Colors.blueAccent],
         gradientFrom = gradientFrom ?? const Offset(0.5, 1),
         gradientTo = gradientTo ?? const Offset(0.5, 0),
@@ -336,6 +341,7 @@ class BarChartRodData with EquatableMixin {
   /// and replaces provided values.
   BarChartRodData copyWith({
     double? y,
+    double? yOffset,
     List<Color>? colors,
     Offset? gradientFrom,
     Offset? gradientTo,
@@ -347,6 +353,7 @@ class BarChartRodData with EquatableMixin {
   }) {
     return BarChartRodData(
       y: y ?? this.y,
+      yOffset: yOffset ?? this.yOffset,
       colors: colors ?? this.colors,
       gradientFrom: gradientFrom ?? this.gradientFrom,
       gradientTo: gradientTo ?? this.gradientTo,
@@ -368,6 +375,7 @@ class BarChartRodData with EquatableMixin {
       width: lerpDouble(a.width, b.width, t),
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t),
       y: lerpDouble(a.y, b.y, t)!,
+      yOffset: lerpDouble(a.yOffset, b.yOffset, t)!,
       backDrawRodData: BackgroundBarChartRodData.lerp(a.backDrawRodData, b.backDrawRodData, t),
       rodStackItems: lerpBarChartRodStackList(a.rodStackItems, b.rodStackItems, t),
     );
@@ -377,6 +385,7 @@ class BarChartRodData with EquatableMixin {
   @override
   List<Object?> get props => [
         y,
+        yOffset,
         width,
         borderRadius,
         backDrawRodData,
